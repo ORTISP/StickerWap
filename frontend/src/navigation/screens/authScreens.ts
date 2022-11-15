@@ -3,7 +3,7 @@ import Collection from 'screens/Collection';
 import Messaging from 'screens/Chat/Messaging';
 import Settings from 'screens/Settings';
 import Swipe from 'screens/Swipe';
-import { CHAT, COLLECTION, SETTINGS, SWIPE } from 'utils/route';
+import { CHAT, COLLECTION, SETTINGS, SWIPE, MESSAGING } from 'utils/route';
 import IScreens from './IScreens';
 
 const authScreens: IScreens[] = [
@@ -24,7 +24,7 @@ const authScreens: IScreens[] = [
     component: Chat,
   },
   {
-    name: 'Messaging',
+    name: MESSAGING,
     component: Messaging,
   },
 ];

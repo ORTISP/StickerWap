@@ -11,8 +11,8 @@ import {
   useColorScheme,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import i18n from 'translations';
 
+import i18n from 'translations';
 import { styles } from 'utils/stylesChat';
 import MessageComponent from 'components/MessageComponent';
 import spacingStyles from 'styles/spacing';

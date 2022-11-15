@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 
 import auth from "../middleware/auth";
 const Album = require("../models/album");
