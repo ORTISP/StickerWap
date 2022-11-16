@@ -18,13 +18,18 @@ import { cateogryMap, newShade } from 'screens/Collection/utils';
 import socket from 'utils/socket';
 import { useSelector } from 'react-redux';
 import TinderCard from 'react-tinder-card';
-import Sticker from 'components/Sticker';
+import Sticker from 'screens/Swipe/Sticker';
 
+// interface Card {
+//   swipeData?: any;
+//   ad?: any;
+//   countryData?: any;
+// }
+
+// ten stickers are GET from the server, when swipe right or left, the sticker is POST to the server and removed from the array
+// if 5 or less stickers are remaining, GET 10 more stickers
 const Swipe = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [swipeData, setSwipeData] = useState<any>();
-  const [ad, setAd] = useState<any>();
-  const [countryData, setCountryData] = useState<any>();
+  const [cards, setCards] = useState<any[]>([]);
   const { id } = useSelector((state: RootState) => state.auth.data);
 
   const handleChat = (name: string, user1: string, user2: string) => {
@@ -34,33 +39,36 @@ const Swipe = () => {
   const handleSwipeTick = () => {
     api
       .post('/swipe', {
-        user_id: swipeData.user_id,
-        randomSticker: swipeData.sticker,
+        user_id: cards[0]?.swipeData.user_id,
+        randomSticker: cards[0]?.swipeData.sticker,
       })
       .then(res => {
         handleChat('testtttt', '6369ac9cda56ac6f887f6438', id);
       })
       .catch(err => console.log(err));
+    // setCards([])
     getStickerData();
+    
   };
 
   const handleSwipeCross = () => {
+    // setCards([])
     getStickerData();
   };
 
-  const getStickerData = () =>
-    api.get('/swipe').then(async (data: any) => {
+  const getStickerData = async () =>
+    await api.get('/swipe').then(async (data: any) => {
       if (data?.response?.status === 400) {
         throw data?.response?.data?.error;
       }
-      if (data.data.ad) {
-        setAd(data.data.ad);
-      } else {
-        setSwipeData(data.data);
-        setCountryData(cateogryMap(data.data.sticker.category));
-        setAd(data.data.ad);
-      }
+      setCards([data.data]);
     });
+
+  // const get10Stickers = async () => {
+  //   for (let i = 0; i < 10; i++) {
+  //     await getStickerData();
+  //   }
+  // };
 
   useEffect(() => {
     getStickerData();
@@ -75,7 +83,6 @@ const Swipe = () => {
         handleSwipeTick();
         break;
     }
-
     // getStickerData();
   };
 
@@ -88,13 +95,11 @@ const Swipe = () => {
         handleSwipeTick();
         break;
     }
-    console.log(myIdentifier + ' left the screen');
-    getStickerData();
+    // getStickerData();
   };
 
   return (
     <SafeAreaView style={spacingStyles.mainScreen}>
-      {/* <ScrollView contentInsetAdjustmentBehavior="automatic"> */}
       <View style={styles.container}>
         <LinearGradient
           colors={['#04B600', '#0094FF']}
@@ -103,15 +108,26 @@ const Swipe = () => {
           <Text style={styles.bigHeader}>{i18n.t('swipe.title')}</Text>
         </LinearGradient>
 
-        <TinderCard
-          onSwipe={onSwipe}
-          onCardLeftScreen={() => onCardLeftScreen('fooBar')}
-          preventSwipe={['up', 'down']}
-          swipeThreshold={0.5}
-          swipeRequirementType={'position'}
-        >
-          <Sticker ad={ad} swipeData={swipeData} countryData={countryData} />
-        </TinderCard>
+        <View style={styles.cardsContainer}>
+
+          {
+            cards.map((card: any) => {
+              return (
+                <TinderCard
+                  onSwipe={onSwipe}
+                  onCardLeftScreen={() => onCardLeftScreen('fooBar')}
+                  preventSwipe={['up', 'down']}
+                  swipeThreshold={0.5}
+                  swipeRequirementType={'position'}
+                  key={card?.swipeData?.sticker}
+                >
+                  <Sticker card={card} />
+                </TinderCard>
+              )
+            })
+          }
+        </View>
+
 
         <View style={styles.buttonsContainer}>
           <TouchableOpacity

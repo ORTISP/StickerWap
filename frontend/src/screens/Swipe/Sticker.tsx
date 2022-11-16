@@ -8,39 +8,39 @@ const Sticker = (props: any) => {
   return (
     <View style={styles.stickerContainer}>
       <View style={styles.sticker}>
-        {props.ad ? (
+        {props?.card?.ad ? (
           <View style={styles.adContainer}>
-            <Text>{props.ad?.title}</Text>
-            <Text>{props.ad?.description}</Text>
+            <Text>{props?.card?.ad?.title}</Text>
+            <Text>{props?.card?.ad?.description}</Text>
             <Image
-              source={{ uri: props.ad?.image }}
+              source={{ uri: props?.card?.ad?.image }}
               style={{ width: 200, height: 300 }}
             />
-            <Text>{props.ad?.link}</Text>
+            <Text>{props?.card?.ad?.link}</Text>
           </View>
         ) : (
           <View
             style={[
               styles.cardContainer,
               {
-                backgroundColor: newShade(
-                  props.countryData ? props.countryData.color : '#000',
-                  180,
-                ),
+                // backgroundColor: newShade(
+                //   props?.card?.countryData ? props?.card?.countryData.color : '#000',
+                //   180,
+                // ),
               },
             ]}
           >
             <Image
               source={{
-                uri: props.swipeData?.flag,
+                uri: props?.card?.swipeData?.flag,
               }}
               style={{ width: 200, height: 120 }}
             />
             <Text style={styles.stickerId}>
-              {props.swipeData?.sticker?.name}
+              {props?.card?.swipeData?.sticker?.name}
             </Text>
             <Text style={styles.stickerCountry}>
-              {props.swipeData?.sticker?.category}
+              {props?.card?.swipeData?.sticker?.category}
             </Text>
           </View>
         )}

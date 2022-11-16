@@ -29,13 +29,18 @@ const styles = StyleSheet.create({
   sticker: {
     width: '80%',
     height: screenHeight * 0.5,
-    backgroundColor: '#F2F2F2',
     borderRadius: 20,
-    borderColor: '#04B600',
-    borderWidth: 2,
+    borderColor: 'grey',
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
+  },
+  cardsContainer: {
+    height: screenHeight * 0.5,
+    width: '100%',
+    display: 'flex',
+    // flexDirection: 'row',
   },
   cardContainer: {
     display: 'flex',
@@ -43,8 +48,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    width: '90%',
-    height: '90%',
+    width: '100%',
+    height: '100%',
     borderRadius: 20,
   },
   stickerTitle: {
@@ -139,11 +144,20 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontFamily: 'Raleway',
   },
-  stickerText: {
-    fontSize: 16,
+  stickerCountry: {
+    fontSize: 36,
+    color: 'grey',
+    fontFamily: 'Raleway',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  stickerId: {
+    fontSize: 36,
     fontWeight: 'bold',
     color: 'grey',
     fontFamily: 'Raleway',
+    textAlign: 'center',
+    marginTop: 20,
   },
   adContainer: {
     width: '100%',
