@@ -45,7 +45,6 @@ socketIO.on("connection", async (socket) => {
     });
 
     if (!chatExistsOrNullValue) {
-      console.log("creating chat", user1, user2);
       const chat = new Chat({
         _id: new mongoose.Types.ObjectId(),
         messages: [],
