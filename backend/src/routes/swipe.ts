@@ -19,32 +19,7 @@ router.get("/", auth, async (req: any, res) => {
       res.send({ user_id: null, randomSticker: null, sticker: null, ad });
     }
   } catch (e) {
-    res.status(500).send();
-  }
-});
-
-router.post("/", auth, async (req: any, res) => {
-  try {
-    const user = req.user;
-    const user_id = req.body.user_id;
-    const sticker_id = req.body.sticker_id;
-    const user2 = await User.findById(user_id);
-    if (!user2) {
-      return res.status(404).send();
-    }
-    if (user2.album[sticker_id] > 0) {
-      return res.status(400).send();
-    }
-    if (user.matches[user_id]) {
-      return res.status(400).send();
-    }
-    if (!user.matches.includes(user_id)) {
-      user.matches.push(user_id);
-      user.save();
-    }
-    await user.save();
-    res.send(user.matches);
-  } catch (e) {
+    console.log(e);
     res.status(500).send();
   }
 });
